@@ -157,6 +157,8 @@ function setUpMap(newRoutes) {
                 google.maps.event.addListener(directionsDisplays[routeNum], 'click', function() {
                     highlightedRoute = num;
                     setUpMap();
+                    globalDirectionsRenderer.setDirections(response);
+                    globalDirectionsRenderer.setRouteIndex(highlightedRoute);
                 });
                 })(routeNum);
 
