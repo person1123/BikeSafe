@@ -121,7 +121,7 @@ form {
     position:relative;
 }
 
-.directions-panel {
+#directions-panel {
     width:100px;
     height:100px;
 }

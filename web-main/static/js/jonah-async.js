@@ -2,8 +2,6 @@ var directionsDisplays;
 var directionsService = new google.maps.DirectionsService();
 var map;
 
-var globalDirectionRenderer = new google.maps.DirectionsRenderer();
-
 var highlightedRoute;
 var iconSets;
 
@@ -178,9 +176,6 @@ function setUpMap(newRoutes) {
             highlight(minIndex);
             
             map.fitBounds(directionsDisplays[highlightedRoute].Bounds());
-            
-            globalDirectionRenderer.setMap(map);
-            globalDirectionRenderer.setDisplay(document.getElementById('directions-panel'));
         } else {
             highlight(highlightedRoute);
         }
@@ -263,9 +258,10 @@ function calcRoute() {
                         complexPolys[routeNum].push({latlng:complexPoints[i],dangerValue:parseInt(dangerValues[i] ) });
                     }
                     setUpMap();
-		});
+		      });
             }
-            globalDirectionRenderer.setDirections(response);
+            directionsDisplays[highlightedRoute].setPanel(document.getElementById('directions-panel');
+            directionsDisplays[highlightedRoute].setDirections(response[highlightedRoute]);
         }
       });
     } catch(e) {
