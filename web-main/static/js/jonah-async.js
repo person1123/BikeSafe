@@ -187,10 +187,10 @@ function highlight(newHRoute) {
     highlightedRoute = newHRoute;
             
     var icons = iconSets[highlightedRoute];
-
+/*
     for (var i = 0; i < icons.length; i++) {
         icons[i].strokeOpacity = 1;
-    }
+    }*/
 
     directionsDisplays[highlightedRoute].setOptions({ strokeOpacity: 1,
                                    strokeWeight: 7,
@@ -218,8 +218,8 @@ function stitchComplexPath(route) {
 }
 
 function getValuesForPath(latlngs, callback) {
-    var primitiveValues = jQuery.map(latlngs, function(latlng) { return [latlng.lat(), latlng.lng()];});
-    $.post("/process", primitiveValues, callback);
+    var primitiveValues = jQuery.map(latlngs, function(latlng) { return [[latlng.lat(), latlng.lng()]];});
+    $.post("/process", JSON.stringify({latlng:primitiveValues,userSex:"male"}), callback);
 }
 
 function calcRoute() {
@@ -244,9 +244,10 @@ function calcRoute() {
                 var route = response.routes[routeNum];
                 //maybe a barebones setUpMap() with no data
                 getValuesForPath(route.overview_path, function(dangerValues) {
+                    console.log(dangerValues);
                     simplePolys[routeNum] = [];
                     for (var i = 0; i < dangerValues.length; i++) {
-                        simplePolys[routeNum].push({latlng:route.overview_path[i],dangerValue:dangerValues[i]});
+                        simplePolys[routeNum].push({latlng:route.overview_path[i],dangerValue:parseInt(dangerValues[i])});
                     }
                     setUpMap();
                 });
@@ -254,7 +255,7 @@ function calcRoute() {
                 getValuesForPath(complexPoints, function(dangerValues) {
                     complexPolys[routeNum] = [];
                     for (var i = 0; i < dangerValues.length; i++) {
-                        complexPolys[routeNum].push({latlng:complexPoints[i],dangerValue:dangerValues[i]});
+                        complexPolys[routeNum].push({latlng:complexPoints[i],dangerValue:parseInt(dangerValues[i] ) });
                     }
                     setUpMap();
 		});
