@@ -120,3 +120,8 @@ form {
     height:100%;
     position:relative;
 }
+
+.directions-panel {
+    width:100px;
+    height:100px;
+}

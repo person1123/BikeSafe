@@ -2,6 +2,8 @@ var directionsDisplays;
 var directionsService = new google.maps.DirectionsService();
 var map;
 
+var globalDirectionRenderer = new google.maps.DirectionsRenderer();
+
 var highlightedRoute;
 var iconSets;
 
@@ -176,6 +178,9 @@ function setUpMap(newRoutes) {
             highlight(minIndex);
             
             map.fitBounds(directionsDisplays[highlightedRoute].Bounds());
+            
+            globalDirectionRenderer.setMap(map);
+            globalDirectionRenderer.setDisplay(document.getElementById('directions-panel'));
         } else {
             highlight(highlightedRoute);
         }
@@ -260,6 +265,7 @@ function calcRoute() {
                     setUpMap();
 		});
             }
+            globalDirectionRenderer.setDirections(response);
         }
       });
     } catch(e) {
